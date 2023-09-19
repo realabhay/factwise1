@@ -1,9 +1,0 @@
-{"board_name": "shell board", "board_description": "", "board_id": 5, "board_status": "OPEN", "creation_time": "Sun 17 Sep 2023, 08:10AM", "end_time": null, "team_status": "NOT_ASSIGNED"}
-
-
-Tasks:
-+---------+---------------+-------------------------+-------------+---------+-----------+----------------------+
-| task_id |     title     |       description       |    status   | user_id | user_name |    creation_time     |
-+---------+---------------+-------------------------+-------------+---------+-----------+----------------------+
-|    2    | sample task 2 | sample task description | IN_PROGRESS |    12   |  sample12 | 17/09/2023, 08:16:23 |
-+---------+---------------+-------------------------+-------------+---------+-----------+----------------------+
