@@ -1,15 +1,9 @@
-import sys
-import os
-import django
-sys.path.append('C:\\Users\\apcr7\\OneDrive\\Documents\\Downloads\\Factwise_python challenge 25082023\\factwise-python\\mysite')
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
-django.setup()
-
 from factwise.models import User
 from factwise.models import Team
 from factwise.models import Board
 from factwise.models import Task
 import json
+from pathlib import Path
 from prettytable import PrettyTable
 
 class ProjectBoardBase:
@@ -214,7 +208,9 @@ class ProjectBoardBase:
         
         text = text + table.get_string()
 
-        with open("out/" + board.board_name + ".txt", 'w') as f:
+        output_dir = Path("out")
+        output_dir.mkdir(exist_ok=True)
+        with (output_dir / (board.board_name + ".txt")).open('w', encoding='utf-8') as f:
             f.write(text)
 
         ret = {}
