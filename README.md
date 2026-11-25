@@ -27,3 +27,7 @@ Open <http://127.0.0.1:8000/> to see the app's welcome page. The database file `
 The base interfaces are `factwise.user_base.UserBase`, `factwise.team_base.TeamBase`, and `factwise.project_board_base.ProjectBoardBase`. They return JSON strings where specified in their method documentation. Board exports are written to `out/<board name>.txt`; the directory is created automatically.
 
 Task titles are globally unique, as enforced by the model. Install the packages listed in `factwise/requirements.txt`; board export uses `prettytable`.
+
+## CRUD manual
+
+See [CRUD_GUIDE.md](CRUD_GUIDE.md) for shell examples and current API limitations.
