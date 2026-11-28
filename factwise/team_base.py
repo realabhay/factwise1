@@ -1,10 +1,3 @@
-import sys
-import os
-import django
-sys.path.append('C:\\Users\\apcr7\\OneDrive\\Documents\\Downloads\\Factwise_python challenge 25082023\\factwise-python\\mysite')
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
-django.setup()
-
 from factwise.models import User
 from factwise.models import Team
 from factwise.models import UserxTeam

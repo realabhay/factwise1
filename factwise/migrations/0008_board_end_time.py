@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='board',
             name='end_time',
-            field=models.DateTimeField(default=None, null=True),
+            field=models.DateTimeField(blank=True, default=None, null=True),
         ),
     ]

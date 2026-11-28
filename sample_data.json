@@ -1,0 +1,78 @@
+[
+  {
+    "model": "factwise.user",
+    "pk": 1,
+    "fields": {
+      "user_name": "alex.morgan",
+      "description": "Product lead for the sample workspace.",
+      "display_name": "Alex Morgan",
+      "creation_time": "2024-01-15T09:00:00Z"
+    }
+  },
+  {
+    "model": "factwise.user",
+    "pk": 2,
+    "fields": {
+      "user_name": "sam.lee",
+      "description": "Engineer on the sample workspace.",
+      "display_name": "Sam Lee",
+      "creation_time": "2024-01-16T09:00:00Z"
+    }
+  },
+  {
+    "model": "factwise.team",
+    "pk": 1,
+    "fields": {
+      "team_name": "Launch Team",
+      "team_description": "Sample team coordinating the product launch.",
+      "admin": 1,
+      "creation_time": "2024-01-17T09:00:00Z"
+    }
+  },
+  {
+    "model": "factwise.userxteam",
+    "pk": 1,
+    "fields": {"user_id": 1, "team_id": 1}
+  },
+  {
+    "model": "factwise.userxteam",
+    "pk": 2,
+    "fields": {"user_id": 2, "team_id": 1}
+  },
+  {
+    "model": "factwise.board",
+    "pk": 1,
+    "fields": {
+      "board_name": "Product Launch",
+      "board_description": "Tasks for preparing the first product launch.",
+      "board_status": "OPEN",
+      "creation_time": "2024-01-18T09:00:00Z",
+      "team_id": 1,
+      "end_time": null
+    }
+  },
+  {
+    "model": "factwise.task",
+    "pk": 1,
+    "fields": {
+      "task_title": "Draft launch checklist",
+      "task_description": "Create the first pass of the launch checklist.",
+      "board_id": 1,
+      "user_id": 1,
+      "task_status": "COMPLETE",
+      "creation_time": "2024-01-19T09:00:00Z"
+    }
+  },
+  {
+    "model": "factwise.task",
+    "pk": 2,
+    "fields": {
+      "task_title": "Review onboarding flow",
+      "task_description": "Walk through signup and note remaining issues.",
+      "board_id": 1,
+      "user_id": 2,
+      "task_status": "IN_PROGRESS",
+      "creation_time": "2024-01-20T09:00:00Z"
+    }
+  }
+]
