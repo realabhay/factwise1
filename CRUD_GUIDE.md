@@ -29,11 +29,9 @@ boards_api = ProjectBoardBase()
 
 The helper methods take JSON **strings** as arguments. Use `json.dumps(...)` to build them, and `json.loads(...)` to turn returned JSON strings into Python values.
 
-## Important: creation IDs
+## Creation IDs
 
-The models declare `user_id`, `team_id`, `board_id`, and `task_id` as regular integer primary keys. They are not auto-incrementing fields. The helper methods `create_user`, `create_team`, `create_board`, and `add_task` do not supply those IDs, so their create operations can fail with a database integrity error on a fresh database.
-
-Until ID generation is fixed in the project, create records through the Django ORM and supply an unused ID explicitly. The examples below use IDs that do not collide with the bundled sample rows. The helper methods can then be used to list, describe, and update supported records.
+The models declare their IDs as regular integer primary keys rather than Django `AutoField`s. With this project's SQLite database, the `create_user`, `create_team`, `create_board`, and `add_task` helpers successfully create records and return generated IDs. I verified this using a transaction that was rolled back afterward. If you switch to a different database backend, review ID generation first; this SQLite behavior may not carry over unchanged.
 
 ## Users
 
@@ -48,15 +46,11 @@ json.loads(users_api.describe_user(json.dumps({"id": 1})))
 
 ### Create
 
-Use an unused `user_id` explicitly:
-
 ```python
-new_user = User.objects.create(
-    user_id=3,
-    user_name="jordan.ross",
-    display_name="Jordan Ross",
-    description="Release coordinator",
-)
+new_user_id = json.loads(users_api.create_user(json.dumps({
+    "name": "jordan.ross",
+    "display_name": "Jordan Ross",
+})))["id"]
 ```
 
 ### Update
@@ -95,15 +89,14 @@ json.loads(teams_api.get_user_teams(json.dumps({"id": 1})))
 
 ### Create
 
-The admin must refer to an existing user. Supply a free `team_id`:
+The admin must refer to an existing user:
 
 ```python
-new_team = Team.objects.create(
-    team_id=2,
-    team_name="Release Team",
-    team_description="Team preparing the release",
-    admin=User.objects.get(user_id=3),
-)
+new_team_id = json.loads(teams_api.create_team(json.dumps({
+    "name": "Release Team",
+    "description": "Team preparing the release",
+    "admin": 1,
+})))["id"]
 ```
 
 ### Update
@@ -146,15 +139,14 @@ Deleting a team leaves its boards in place but sets their `team_id` to null; mem
 
 ### Create a board
 
-A board needs an existing team and an unused `board_id`:
+A board needs an existing team:
 
 ```python
-new_board = Board.objects.create(
-    board_id=2,
-    board_name="Release Prep",
-    board_description="Work for the upcoming release",
-    team_id=Team.objects.get(team_id=2),
-)
+new_board_id = json.loads(boards_api.create_board(json.dumps({
+    "name": "Release Prep",
+    "description": "Work for the upcoming release",
+    "team_id": 1,
+})))["id"]
 ```
 
 ### Read boards and tasks
@@ -170,16 +162,15 @@ list(Task.objects.filter(board_id__board_id=2).values(
 
 ### Create a task
 
-Use an unused `task_id`; the board must be open, and the assignee must be an existing user:
+The board must be open, and the assignee must be an existing user:
 
 ```python
-new_task = Task.objects.create(
-    task_id=3,
-    task_title="Write release checklist",
-    task_description="Prepare the release checklist",
-    board_id=Board.objects.get(board_id=2),
-    user_id=User.objects.get(user_id=3),
-)
+new_task_id = json.loads(boards_api.add_task(json.dumps({
+    "title": "Write release checklist",
+    "description": "Prepare the release checklist",
+    "board_id": 1,
+    "user_id": 1,
+})))["id"]
 ```
 
 The model enforces globally unique task titles, not just unique titles within one board.
